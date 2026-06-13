@@ -8,6 +8,7 @@ import { AnimatedThemeToggler } from '#/components/ui/animated-theme-toggler.tsx
 import { RainbowButton } from '#/components/ui/rainbow-button.tsx'
 import { Pointer } from '#/components/ui/pointer.tsx'
 import { BirthdayCard } from '#/components/BirthdayCard.tsx'
+import { CourseBackground } from '#/components/CourseBackground.tsx'
 
 export const Route = createFileRoute('/')({ component: BirthdayIntro })
 
@@ -66,6 +67,8 @@ function BirthdayIntro() {
         style={{ cursor: 'none' }}
         variant="circle"
       />
+
+      {phase === 'card' && <CourseBackground />}
 
       <AnimatePresence mode="wait">
         {phase === 'intro' ? (

@@ -72,6 +72,21 @@ function Cover() {
       <div className="pointer-events-none absolute -bottom-[15%] -right-[8%] h-64 w-64 rounded-full bg-purple-600/25 blur-3xl" />
       <div className="pointer-events-none absolute top-[25%] right-[12%] h-36 w-36 rounded-full bg-indigo-400/20 blur-2xl" />
 
+      <svg
+        className="pointer-events-none absolute bottom-5 right-6 w-12 h-12 text-pink-300/25 z-10"
+        viewBox="0 0 48 48"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
+      >
+        <circle cx="22" cy="25" r="16" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M8 18 Q22 12 36 20" stroke="currentColor" strokeWidth="1" fill="none" />
+        <path d="M6 25 Q22 18 38 26" stroke="currentColor" strokeWidth="1" fill="none" />
+        <path d="M8 32 Q22 26 36 32" stroke="currentColor" strokeWidth="1" fill="none" />
+        <line x1="33" y1="8" x2="44" y2="19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <circle cx="33" cy="8" r="2.5" fill="currentColor" />
+      </svg>
+
       <LightRays
         count={5}
         color="rgba(196, 77, 255, 0.35)"
@@ -107,18 +122,35 @@ function Message() {
       <div className="pointer-events-none absolute top-0 right-0 h-36 w-36 rounded-bl-[80px] bg-gradient-to-bl from-pink-100 to-transparent opacity-60" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-28 w-28 rounded-tr-[60px] bg-gradient-to-tr from-purple-100 to-transparent opacity-60" />
 
-      <div className="max-w-[480px] text-center space-y-4">
+      <div className="max-w-[520px] text-center space-y-3">
         <div className="w-10 h-px bg-gradient-to-r from-pink-300 to-purple-300 mx-auto" />
         <p
-          className="text-stone-600 leading-relaxed text-[clamp(0.85rem,2vw,1.1rem)]"
+          className="text-stone-700 font-semibold text-[clamp(0.8rem,1.7vw,1rem)]"
           style={{ fontFamily: 'Fraunces, Georgia, serif' }}
         >
-          Write your message here. This is a placeholder for the heartfelt words
-          you'll add for Iona's birthday.
+          Dear Iona, Happy 22nd Birthday!
+        </p>
+        <p
+          className="text-stone-600 leading-relaxed text-[clamp(0.72rem,1.5vw,0.9rem)]"
+          style={{ fontFamily: 'Fraunces, Georgia, serif' }}
+        >
+          Can't believe you're almost an old grandma. I know this is late but I
+          hope the effort put into it was worth the wait — don't be expecting
+          this quality every year!
+        </p>
+        <p
+          className="text-stone-600 leading-relaxed text-[clamp(0.72rem,1.5vw,0.9rem)]"
+          style={{ fontFamily: 'Fraunces, Georgia, serif' }}
+        >
+          Hopefully you'll like the gift too. You are a wonderful sister and I
+          aspire to be as nice as you one day.
         </p>
         <div className="w-10 h-px bg-gradient-to-r from-purple-300 to-pink-300 mx-auto" />
         <p className="text-stone-400 text-[clamp(0.6rem,1.2vw,0.7rem)] tracking-[0.3em] uppercase">
           With love from Ryan
+        </p>
+        <p className="text-stone-400 text-[0.55rem] tracking-widest uppercase select-none">
+          "bears. beets. battlestar galactica." — d. schrute
         </p>
       </div>
     </div>

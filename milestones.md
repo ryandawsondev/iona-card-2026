@@ -123,6 +123,67 @@ Prev/Next controls to flip between pages. Arrow buttons or swipe gesture (pointe
 
 ---
 
+---
+
+## Phase 3 — Interactive Cursor Obstacle Course
+
+Background mini-game rendered behind the birthday card. The card floats in the center; the course fills the viewport around it. Cursor becomes the "player" — navigate the winding track without touching walls or moving obstacles.
+
+**UX flow:** Card phase loads → course appears behind card → player navigates → reaching the finish triggers a celebration burst.
+
+---
+
+### M3.1 — Course background layer
+**Status:** `[x]`
+
+SVG layer `position: absolute, inset: 0, z-index: 0` rendered inside the card-phase `<main>`. Card sits above it at `z-10`. Course drawn in the dead space around the card (top strip, left/right strips, bottom strip).
+
+**Implementation notes:**
+- SVG fills 100dvw × 100dvh
+- Track is a winding corridor — two parallel `<path>` strokes forming walls, ~40px wide
+- Path routes: start bottom-left corner → winds around card edges → ends top-right corner
+- Track colour: subtle, theme-aware (dark mode: white/10, light mode: stone/20) — doesn't compete with card
+- Moving obstacles: 3–5 `<circle>` or `<rect>` elements animated with `motion` oscillating across the track width
+
+---
+
+### M3.2 — Cursor tracking and collision detection
+**Status:** `[x]`
+
+Track `mousemove` on the background layer. On each move, check whether the cursor point lies inside the track corridor.
+
+**Implementation notes:**
+- Collision check: use `SVGGeometryElement.isPointInStroke()` on each wall path with `strokeWidth` set to track width — fast, no manual math
+- On wall collision: red flash on the track segment, cursor snaps back to last valid checkpoint position
+- Checkpoints: invisible waypoints along the path — cursor records last crossed checkpoint, resets there on hit
+- Moving obstacle collision: bounding-box check against each obstacle's current animated position
+
+---
+
+### M3.3 — Progress indicator
+**Status:** `[x]`
+
+Visual feedback showing how far along the course the player is.
+
+**Implementation notes:**
+- Thin progress bar top of screen, or glow on the completed portion of the SVG path
+- Preferred: use `SVGPathElement.getTotalLength()` + cursor's nearest point on path to compute 0–100% progress
+- Completed track segment fills with a pink/purple gradient as cursor advances
+
+---
+
+### M3.4 — Course completion celebration
+**Status:** `[x]`
+
+Reaching the finish (end of track) triggers a reward.
+
+**Implementation notes:**
+- `canvas-confetti` burst from the finish point coordinates
+- Brief celebration message fades in over card (e.g. "You made it! 🎉") then fades out after 2s
+- Card gets a short rainbow glow pulse (animate box-shadow colours briefly)
+
+---
+
 ## Out of Scope (for now)
 
 - Audio / music
