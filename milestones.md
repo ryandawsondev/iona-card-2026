@@ -84,7 +84,7 @@ Wire up `AnimatedThemeToggler` (`animated-theme-toggler.tsx`) in a fixed top-rig
 ## Phase 2 — Birthday Card Component
 
 ### M2.1 — Card flip mechanic
-**Status:** `[ ]`
+**Status:** `[x]`
 3D flip animation between pages using `motion` `rotateY`. The card has a front face and back face per spread.
 
 **Implementation notes:**
@@ -96,13 +96,13 @@ Wire up `AnimatedThemeToggler` (`animated-theme-toggler.tsx`) in a fixed top-rig
 ---
 
 ### M2.2 — Card page 1 — Cover
-**Status:** `[ ]`
+**Status:** `[x]`
 Front cover of the card. Design: bold "Happy Birthday Iona" with decorative elements. Wrap card surface in `MagicCard` + `ShineBorder`.
 
 ---
 
 ### M2.3 — Card page 2 — Inner message
-**Status:** `[ ]`
+**Status:** `[x]`
 Inside spread: personal message / content (placeholder text for now). Can include photos, drawings, or more text reveals.
 
 ---
@@ -114,7 +114,7 @@ Optional back page — could be a fun sign-off, photos, or a final confetti trig
 ---
 
 ### M2.5 — Page navigation
-**Status:** `[ ]`
+**Status:** `[x]`
 Prev/Next controls to flip between pages. Arrow buttons or swipe gesture (pointer events).
 
 **Notes:**
