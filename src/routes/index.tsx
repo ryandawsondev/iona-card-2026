@@ -1,5 +1,9 @@
 import { createFileRoute } from '@tanstack/react-router'
 
+import { motion, AnimatePresence } from 'motion/react'
+import { Globe } from '@/components/ui/globe'
+import { useReward } from 'partycles'
+
 export const Route = createFileRoute('/')({ component: App })
 
 function App() {
