@@ -36,7 +36,7 @@ const SENTENCES = [
   <>Happy Belated Birthday!</>,
 ]
 
-const DISPLAY_MS = 2400
+const DISPLAY_MS = 4000
 const TRANSITION_MS = 500
 
 function BirthdayIntro() {
