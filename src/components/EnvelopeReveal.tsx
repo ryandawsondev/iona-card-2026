@@ -1,5 +1,6 @@
 import { AnimatePresence, motion } from 'motion/react'
 import { useEffect, useState } from 'react'
+import confetti from 'canvas-confetti'
 import { ShineBorder } from '#/components/ui/shine-border.tsx'
 
 type Stage = 'settling' | 'idle' | 'opening'
@@ -19,8 +20,21 @@ export function EnvelopeReveal({ onDone }: Props) {
 
   const handleOpen = () => {
     setStage('opening')
-    // Flap finishes rotating ~400ms in; card + envelope animate simultaneously
-    setTimeout(() => setShowCard(true), 480)
+    setTimeout(() => {
+      setShowCard(true)
+      const burst = (angle: number, x: number) =>
+        confetti({
+          particleCount: 60,
+          angle,
+          spread: 55,
+          origin: { x, y: 0.55 },
+          colors: ['#ff3d7f', '#ff7b2e', '#ffd700', '#c44dff', '#4fb8b2'],
+          scalar: 1.2,
+          startVelocity: 45,
+        })
+      burst(60, 0.35)
+      burst(120, 0.65)
+    }, 480)
   }
 
   return (
