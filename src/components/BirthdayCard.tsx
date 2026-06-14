@@ -40,11 +40,11 @@ export function BirthdayCard({ onGiftReveal }: { onGiftReveal?: () => void }) {
           onTouchEnd={handleTouchEnd}
           animate={{ rotateY: page === 1 ? -180 : 0 }}
           transition={{ type: 'spring', stiffness: 60, damping: 18 }}
-          style={{ transformStyle: 'preserve-3d', cursor: 'none' }}
+          style={{ transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d', cursor: 'none' }}
           className="relative w-[min(760px,92vw)] aspect-[3/4] sm:aspect-[16/10]"
         >
           <div
-            style={{ backfaceVisibility: 'hidden' }}
+            style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
             className="absolute inset-0 rounded-2xl overflow-hidden shadow-[0_0_0_1.5px_rgba(196,77,255,0.7),0_0_35px_rgba(196,77,255,0.4),0_0_70px_rgba(255,107,157,0.2),0_20px_60px_rgba(0,0,0,0.8)]"
           >
             <Cover />
@@ -53,6 +53,7 @@ export function BirthdayCard({ onGiftReveal }: { onGiftReveal?: () => void }) {
           <div
             style={{
               backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
               transform: 'rotateY(180deg)',
             }}
             className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl"
