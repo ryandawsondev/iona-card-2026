@@ -75,7 +75,9 @@ export function BirthdayCard({ onGiftReveal }: { onGiftReveal?: () => void }) {
       </div>
 
       <p className="text-xs text-[var(--sea-ink-soft)] tracking-widest uppercase opacity-50 select-none">
-        {page === 0 ? 'swipe or tap right to open' : 'swipe or tap left to go back'}
+        {page === 0
+          ? 'swipe or tap right to open'
+          : 'swipe or tap left to go back'}
       </p>
     </div>
   )
@@ -180,7 +182,7 @@ function Message({ onGiftReveal }: { onGiftReveal?: () => void }) {
           style={{ fontFamily: 'Fraunces, Georgia, serif' }}
         >
           Can't believe you're almost an old grandma. I know this is late but I
-          hope the effort put into it was worth the wait — don't be expecting
+          hope the effort put into it was worth the wait; don't be expecting
           this quality every year!
         </p>
         <p
@@ -188,7 +190,7 @@ function Message({ onGiftReveal }: { onGiftReveal?: () => void }) {
           style={{ fontFamily: 'Fraunces, Georgia, serif' }}
         >
           Hopefully you'll like the gift too. You are a wonderful sister and I
-          aspire to be as nice as you one day.
+          wouldnt want anyone else as my sibling.
         </p>
         <div className="w-10 h-px bg-gradient-to-r from-purple-300 to-pink-300 mx-auto" />
         <p className="text-stone-400 text-[0.6rem] tracking-[0.3em] uppercase sm:text-[clamp(0.6rem,1.2vw,0.7rem)]">
