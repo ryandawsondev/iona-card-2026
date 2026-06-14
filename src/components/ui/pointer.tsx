@@ -49,11 +49,29 @@ export function Pointer({
       setIsActive(false)
     }
 
+    const handleTouchStart = (e: TouchEvent) => {
+      x.set(e.touches[0].clientX)
+      y.set(e.touches[0].clientY)
+      setIsActive(true)
+    }
+
+    const handleTouchMove = (e: TouchEvent) => {
+      x.set(e.touches[0].clientX)
+      y.set(e.touches[0].clientY)
+    }
+
+    const handleTouchEnd = () => {
+      setIsActive(false)
+    }
+
     if (parentElement) {
       parentElement.style.cursor = 'none'
       parentElement.addEventListener('mousemove', handleMouseMove)
       parentElement.addEventListener('mouseenter', handleMouseEnter)
       parentElement.addEventListener('mouseleave', handleMouseLeave)
+      parentElement.addEventListener('touchstart', handleTouchStart, { passive: true })
+      parentElement.addEventListener('touchmove', handleTouchMove, { passive: true })
+      parentElement.addEventListener('touchend', handleTouchEnd)
     }
 
     return () => {
@@ -62,6 +80,9 @@ export function Pointer({
         parentElement.removeEventListener('mousemove', handleMouseMove)
         parentElement.removeEventListener('mouseenter', handleMouseEnter)
         parentElement.removeEventListener('mouseleave', handleMouseLeave)
+        parentElement.removeEventListener('touchstart', handleTouchStart)
+        parentElement.removeEventListener('touchmove', handleTouchMove)
+        parentElement.removeEventListener('touchend', handleTouchEnd)
       }
     }
   }, [x, y])

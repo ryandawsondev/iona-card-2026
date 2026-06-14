@@ -205,8 +205,8 @@ function BirthdayIntro() {
         ) : phase === 'card' ? (
           <motion.div
             key="card"
-            initial={{ opacity: 0, scale: 0.96, filter: 'blur(8px)' }}
-            animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
+            initial={{ opacity: 0, scale: 0.96 }}
+            animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
             <BirthdayCard onGiftReveal={() => setPhase('gift')} />

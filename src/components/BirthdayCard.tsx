@@ -33,44 +33,32 @@ export function BirthdayCard({ onGiftReveal }: { onGiftReveal?: () => void }) {
 
   return (
     <div className="flex flex-col items-center gap-5">
-      <div style={{ perspective: '1400px', WebkitPerspective: '1400px' }}>
+      <div
+        className="relative w-[min(760px,92vw)] aspect-[3/4] sm:aspect-[16/10]"
+        style={{ perspective: '1400px', cursor: 'none' }}
+        onClick={handleClick}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+      >
+        {/* Split-flip: each face only rotates 90°, no backface ever shown.
+            Avoids preserve-3d + backface-visibility which break on iOS Safari
+            when any ancestor has filter/opacity/overflow-hidden stacking contexts. */}
         <motion.div
-          onClick={handleClick}
-          onTouchStart={handleTouchStart}
-          onTouchEnd={handleTouchEnd}
-          animate={{ rotateY: page === 1 ? -180 : 0 }}
+          animate={{ rotateY: page === 0 ? 0 : -90 }}
           transition={{ type: 'spring', stiffness: 60, damping: 18 }}
-          style={{
-            transformStyle: 'preserve-3d',
-            WebkitTransformStyle: 'preserve-3d',
-            cursor: 'none',
-            willChange: 'transform',
-          }}
-          className="relative w-[min(760px,92vw)] aspect-[3/4] sm:aspect-[16/10]"
+          style={{ zIndex: page === 0 ? 1 : 0, pointerEvents: page === 0 ? 'auto' : 'none' }}
+          className="absolute inset-0 rounded-2xl overflow-hidden shadow-[0_0_0_1.5px_rgba(196,77,255,0.7),0_0_35px_rgba(196,77,255,0.4),0_0_70px_rgba(255,107,157,0.2),0_20px_60px_rgba(0,0,0,0.8)]"
         >
-          {/* Front face — NO overflow-hidden here, Safari flattens 3D if set on backfaced element */}
-          <div
-            style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
-            className="absolute inset-0 rounded-2xl shadow-[0_0_0_1.5px_rgba(196,77,255,0.7),0_0_35px_rgba(196,77,255,0.4),0_0_70px_rgba(255,107,157,0.2),0_20px_60px_rgba(0,0,0,0.8)]"
-          >
-            <div className="absolute inset-0 rounded-2xl overflow-hidden">
-              <Cover />
-            </div>
-          </div>
+          <Cover />
+        </motion.div>
 
-          {/* Back face — same pattern */}
-          <div
-            style={{
-              backfaceVisibility: 'hidden',
-              WebkitBackfaceVisibility: 'hidden',
-              transform: 'rotateY(180deg)',
-            }}
-            className="absolute inset-0 rounded-2xl shadow-2xl"
-          >
-            <div className="absolute inset-0 rounded-2xl overflow-hidden">
-              <Message onGiftReveal={onGiftReveal} />
-            </div>
-          </div>
+        <motion.div
+          animate={{ rotateY: page === 1 ? 0 : 90 }}
+          transition={{ type: 'spring', stiffness: 60, damping: 18 }}
+          style={{ zIndex: page === 1 ? 1 : 0, pointerEvents: page === 1 ? 'auto' : 'none' }}
+          className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl"
+        >
+          <Message onGiftReveal={onGiftReveal} />
         </motion.div>
       </div>
 
