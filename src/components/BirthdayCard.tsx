@@ -79,11 +79,40 @@ function Cover() {
         xmlns="http://www.w3.org/2000/svg"
         aria-hidden="true"
       >
-        <circle cx="22" cy="25" r="16" stroke="currentColor" strokeWidth="1.5" />
-        <path d="M8 18 Q22 12 36 20" stroke="currentColor" strokeWidth="1" fill="none" />
-        <path d="M6 25 Q22 18 38 26" stroke="currentColor" strokeWidth="1" fill="none" />
-        <path d="M8 32 Q22 26 36 32" stroke="currentColor" strokeWidth="1" fill="none" />
-        <line x1="33" y1="8" x2="44" y2="19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+        <circle
+          cx="22"
+          cy="25"
+          r="16"
+          stroke="currentColor"
+          strokeWidth="1.5"
+        />
+        <path
+          d="M8 18 Q22 12 36 20"
+          stroke="currentColor"
+          strokeWidth="1"
+          fill="none"
+        />
+        <path
+          d="M6 25 Q22 18 38 26"
+          stroke="currentColor"
+          strokeWidth="1"
+          fill="none"
+        />
+        <path
+          d="M8 32 Q22 26 36 32"
+          stroke="currentColor"
+          strokeWidth="1"
+          fill="none"
+        />
+        <line
+          x1="33"
+          y1="8"
+          x2="44"
+          y2="19"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        />
         <circle cx="33" cy="8" r="2.5" fill="currentColor" />
       </svg>
 
@@ -148,9 +177,6 @@ function Message() {
         <div className="w-10 h-px bg-gradient-to-r from-purple-300 to-pink-300 mx-auto" />
         <p className="text-stone-400 text-[clamp(0.6rem,1.2vw,0.7rem)] tracking-[0.3em] uppercase">
           With love from Ryan
-        </p>
-        <p className="text-stone-400 text-[0.55rem] tracking-widest uppercase select-none">
-          "bears. beets. battlestar galactica." — d. schrute
         </p>
       </div>
     </div>

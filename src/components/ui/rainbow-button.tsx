@@ -1,6 +1,6 @@
 import React from "react"
 import { Slot } from "radix-ui"
-import { cva, type VariantProps } from "class-variance-authority"
+import { cva } from "class-variance-authority"
 
 import { cn } from "#/lib/utils.ts"
 
@@ -35,11 +35,10 @@ const rainbowButtonVariants = cva(
   }
 )
 
-interface RainbowButtonProps
-  extends
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    VariantProps<typeof rainbowButtonVariants> {
+interface RainbowButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   asChild?: boolean
+  variant?: 'default' | 'outline'
+  size?: 'default' | 'sm' | 'lg' | 'icon'
 }
 
 const RainbowButton = React.forwardRef<HTMLButtonElement, RainbowButtonProps>(

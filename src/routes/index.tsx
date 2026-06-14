@@ -12,6 +12,7 @@ import { CourseBackground } from '#/components/CourseBackground.tsx'
 
 export const Route = createFileRoute('/')({ component: BirthdayIntro })
 
+
 const PARTY_COLORS = ['#ff6b9d', '#c44dff', '#ff8c42', '#ffd700', '#4fb8b2']
 const AURORA_COLORS = ['#ff6b9d', '#c44dff', '#ff8c42', '#ffd700']
 

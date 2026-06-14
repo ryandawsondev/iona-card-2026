@@ -47,11 +47,6 @@ const SEGMENTS: Segment[] = WAYPOINTS.slice(0, -1).map(([ax, ay], i) => {
 
 const TOTAL_LEN = SEGMENTS.reduce((s, seg) => s + seg.len, 0)
 
-function perpAt(wpIdx: number): [number, number] {
-  const s = SEGMENTS[wpIdx - 1]
-  const len = Math.hypot(s.bx - s.ax, s.by - s.ay)
-  return [-(s.by - s.ay) / len, (s.bx - s.ax) / len]
-}
 
 function nearestOnPath(px: number, py: number) {
   let minDist = Infinity
@@ -317,43 +312,9 @@ export function CourseBackground({ onComplete }: { onComplete?: () => void }) {
 
         {CHECKPOINTS.map((wpIdx, i) => {
           const [cx, cy] = WAYPOINTS[wpIdx]
-          const [px, py] = perpAt(wpIdx)
           const passed = checkpointIdx > i
-          const gr = HALF_TRACK + 10
-          const x1 = cx - px * gr,
-            y1 = cy - py * gr
-          const x2 = cx + px * gr,
-            y2 = cy + py * gr
           return (
             <g key={wpIdx}>
-              <line
-                x1={x1}
-                y1={y1}
-                x2={x2}
-                y2={y2}
-                stroke={
-                  passed ? 'rgba(196,77,255,0.75)' : 'rgba(148,163,184,0.28)'
-                }
-                strokeWidth={passed ? 2.5 : 1.5}
-                strokeDasharray={passed ? undefined : '6 3'}
-                strokeLinecap="round"
-              />
-              <circle
-                cx={x1}
-                cy={y1}
-                r={3.5}
-                fill={
-                  passed ? 'rgba(196,77,255,0.85)' : 'rgba(148,163,184,0.35)'
-                }
-              />
-              <circle
-                cx={x2}
-                cy={y2}
-                r={3.5}
-                fill={
-                  passed ? 'rgba(196,77,255,0.85)' : 'rgba(148,163,184,0.35)'
-                }
-              />
               {passed && (
                 <circle
                   cx={cx}
