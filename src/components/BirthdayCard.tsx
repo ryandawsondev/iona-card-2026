@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { motion } from 'motion/react'
+import { motion, AnimatePresence } from 'motion/react'
 import { AuroraText } from '#/components/ui/aurora-text.tsx'
 import { LightRays } from '#/components/ui/light-rays.tsx'
 import { cn } from '#/lib/utils.ts'
@@ -7,7 +7,7 @@ import { cn } from '#/lib/utils.ts'
 const AURORA_COLORS = ['#ff6b9d', '#c44dff', '#ff8c42', '#ffd700']
 const PAGES = 2
 
-export function BirthdayCard() {
+export function BirthdayCard({ onGiftReveal }: { onGiftReveal?: () => void }) {
   const [page, setPage] = useState(0)
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -41,7 +41,7 @@ export function BirthdayCard() {
             }}
             className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl"
           >
-            <Message />
+            <Message onGiftReveal={onGiftReveal} />
           </div>
         </motion.div>
       </div>
@@ -145,7 +145,7 @@ function Cover() {
   )
 }
 
-function Message() {
+function Message({ onGiftReveal }: { onGiftReveal?: () => void }) {
   return (
     <div className="relative h-full w-full bg-gradient-to-br from-rose-50 via-purple-50 to-indigo-50 flex items-center justify-center p-[clamp(1.5rem,5vw,3rem)]">
       <div className="pointer-events-none absolute top-0 right-0 h-36 w-36 rounded-bl-[80px] bg-gradient-to-bl from-pink-100 to-transparent opacity-60" />
@@ -178,6 +178,21 @@ function Message() {
         <p className="text-stone-400 text-[clamp(0.6rem,1.2vw,0.7rem)] tracking-[0.3em] uppercase">
           With love from Ryan
         </p>
+
+        <AnimatePresence>
+          {onGiftReveal && (
+            <motion.button
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.4 }}
+              onClick={onGiftReveal}
+              className="mt-1 rounded-full border border-purple-200 px-5 py-2 text-[clamp(0.6rem,1.3vw,0.75rem)] font-semibold tracking-wide text-purple-600 transition hover:border-purple-400 hover:bg-purple-50"
+              style={{ cursor: 'none' }}
+            >
+              🎁 Open your gift
+            </motion.button>
+          )}
+        </AnimatePresence>
       </div>
     </div>
   )

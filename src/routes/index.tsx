@@ -9,6 +9,7 @@ import { RainbowButton } from '#/components/ui/rainbow-button.tsx'
 import { Pointer } from '#/components/ui/pointer.tsx'
 import { BirthdayCard } from '#/components/BirthdayCard.tsx'
 import { CourseBackground } from '#/components/CourseBackground.tsx'
+import { EnvelopeReveal } from '#/components/EnvelopeReveal.tsx'
 import backgroundMusicSrc from '../audio-file/01 First Light.mp3'
 
 export const Route = createFileRoute('/')({ component: BirthdayIntro })
@@ -31,7 +32,7 @@ const DISPLAY_MS = 2400
 const TRANSITION_MS = 500
 
 function BirthdayIntro() {
-  const [phase, setPhase] = useState<'intro' | 'card'>('intro')
+  const [phase, setPhase] = useState<'intro' | 'card' | 'gift'>('intro')
   const [index, setIndex] = useState(0)
   const [showButton, setShowButton] = useState(false)
   const [muted, setMuted] = useState(false)
@@ -162,14 +163,24 @@ function BirthdayIntro() {
               )}
             </AnimatePresence>
           </motion.div>
-        ) : (
+        ) : phase === 'card' ? (
           <motion.div
             key="card"
             initial={{ opacity: 0, scale: 0.96, filter: 'blur(8px)' }}
             animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
             transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
           >
-            <BirthdayCard />
+            <BirthdayCard onGiftReveal={() => setPhase('gift')} />
+          </motion.div>
+        ) : (
+          <motion.div
+            key="gift"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <EnvelopeReveal onDone={() => setPhase('card')} />
           </motion.div>
         )}
       </AnimatePresence>

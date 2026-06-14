@@ -81,6 +81,61 @@ Wire up `AnimatedThemeToggler` (`animated-theme-toggler.tsx`) in a fixed top-rig
 
 ---
 
+## Phase 1.5 — Gift Experience Reveal (Envelope)
+
+Intermediate screen between the text intro and the birthday card. An animated envelope slides in from the right, stumbles to a halt, then a pulsing "Open me!" button invites the user to tear it open. The envelope flap rotates back (3D), and a gift card rises up in its place. Gift card reveals the manicure experience details.
+
+---
+
+### M1.5.1 — Intro scatter exit
+**Status:** `[x]`
+When the CTA button is clicked, existing on-screen elements (last sentence, button) scatter off in opposite directions before the envelope phase begins.
+
+**Implementation notes:**
+- Wrap sentence area and button in separate `motion.div` with `animate` driven by `scattering` state
+- Sentence flies: `x: 350, y: -250, rotate: 18, opacity: 0`
+- Button flies: `x: -300, y: 220, rotate: -16, opacity: 0`
+- After 550ms: `phase = 'envelope'`
+
+---
+
+### M1.5.2 — Envelope entrance (stumble)
+**Status:** `[x]`
+Colorful envelope slides in from the right with spring physics producing overshoot + rotation wobble before settling center-screen.
+
+**Implementation notes:**
+- `initial={{ x: 1200, rotate: 10 }}` → `animate={{ x: 0, rotate: 0 }}`
+- Spring: `stiffness: 65, damping: 8, mass: 1.1` — low damping = natural stumble
+- Both `x` and `rotate` overshoot then settle (dual wobble effect)
+- Envelope aesthetic: bright gradient (pink → orange → yellow body, purple → pink flap)
+
+---
+
+### M1.5.3 — Envelope opening (flap rotateX)
+**Status:** `[x]`
+After 1.4s settling delay, "Open me! ✨" button pulses inside the envelope. On click, flap rotates backward (`rotateX: -168`) with spring physics. After 600ms, envelope exits and gift card enters.
+
+**Implementation notes:**
+- `perspective: 900px` on flap wrapper parent (required for 3D rotateX)
+- Flap: `clip-path: polygon(0 0, 100% 0, 50% 100%)` triangle shape
+- Pulse effect: two staggered `motion.span` rings with `scale: [1, 1.7], opacity: [0.7, 0]`
+- ⭐ seal at flap/body join, exits when opening starts
+
+---
+
+### M1.5.4 — Gift card reveal
+**Status:** `[x]`
+After envelope exits, gift card rises in with spring from below. Portrait card showing manicure experience details.
+
+**Implementation notes:**
+- Card: `initial={{ y: 100, opacity: 0, scale: 0.9 }}` → spring entrance
+- Image area (top 62%): placeholder gradient; swap `<img>` tag for real photo
+- Overlays on image: company logo badge (top-right), location badge (bottom-left)
+- Info panel (bottom 38%): "Gift Experience" / "Manicure Experience" / "40 min · 138 Lothian Rd, Edinburgh EH3 9BG"
+- "See your birthday card →" button at bottom calls `onDone()` → `phase = 'card'`
+
+---
+
 ## Phase 2 — Birthday Card Component
 
 ### M2.1 — Card flip mechanic
