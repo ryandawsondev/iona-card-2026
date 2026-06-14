@@ -33,32 +33,43 @@ export function BirthdayCard({ onGiftReveal }: { onGiftReveal?: () => void }) {
 
   return (
     <div className="flex flex-col items-center gap-5">
-      <div style={{ perspective: '1400px' }}>
+      <div style={{ perspective: '1400px', WebkitPerspective: '1400px' }}>
         <motion.div
           onClick={handleClick}
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
           animate={{ rotateY: page === 1 ? -180 : 0 }}
           transition={{ type: 'spring', stiffness: 60, damping: 18 }}
-          style={{ transformStyle: 'preserve-3d', WebkitTransformStyle: 'preserve-3d', cursor: 'none' }}
+          style={{
+            transformStyle: 'preserve-3d',
+            WebkitTransformStyle: 'preserve-3d',
+            cursor: 'none',
+            willChange: 'transform',
+          }}
           className="relative w-[min(760px,92vw)] aspect-[3/4] sm:aspect-[16/10]"
         >
+          {/* Front face — NO overflow-hidden here, Safari flattens 3D if set on backfaced element */}
           <div
             style={{ backfaceVisibility: 'hidden', WebkitBackfaceVisibility: 'hidden' }}
-            className="absolute inset-0 rounded-2xl overflow-hidden shadow-[0_0_0_1.5px_rgba(196,77,255,0.7),0_0_35px_rgba(196,77,255,0.4),0_0_70px_rgba(255,107,157,0.2),0_20px_60px_rgba(0,0,0,0.8)]"
+            className="absolute inset-0 rounded-2xl shadow-[0_0_0_1.5px_rgba(196,77,255,0.7),0_0_35px_rgba(196,77,255,0.4),0_0_70px_rgba(255,107,157,0.2),0_20px_60px_rgba(0,0,0,0.8)]"
           >
-            <Cover />
+            <div className="absolute inset-0 rounded-2xl overflow-hidden">
+              <Cover />
+            </div>
           </div>
 
+          {/* Back face — same pattern */}
           <div
             style={{
               backfaceVisibility: 'hidden',
               WebkitBackfaceVisibility: 'hidden',
               transform: 'rotateY(180deg)',
             }}
-            className="absolute inset-0 rounded-2xl overflow-hidden shadow-2xl"
+            className="absolute inset-0 rounded-2xl shadow-2xl"
           >
-            <Message onGiftReveal={onGiftReveal} />
+            <div className="absolute inset-0 rounded-2xl overflow-hidden">
+              <Message onGiftReveal={onGiftReveal} />
+            </div>
           </div>
         </motion.div>
       </div>
