@@ -339,8 +339,9 @@ export function CourseBackground({ onComplete }: { onComplete?: () => void }) {
               />
               <text
                 x={cx}
-                y={cy + 4}
+                y={cy}
                 textAnchor="middle"
+                dominantBaseline="central"
                 fill={
                   passed ? 'rgba(255,255,255,0.95)' : 'rgba(148,163,184,0.55)'
                 }

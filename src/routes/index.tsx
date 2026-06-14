@@ -9,6 +9,7 @@ import { RainbowButton } from '#/components/ui/rainbow-button.tsx'
 import { Pointer } from '#/components/ui/pointer.tsx'
 import { BirthdayCard } from '#/components/BirthdayCard.tsx'
 import { CourseBackground } from '#/components/CourseBackground.tsx'
+import backgroundMusicSrc from '../audio-file/01 First Light.mp3'
 
 export const Route = createFileRoute('/')({ component: BirthdayIntro })
 
@@ -33,7 +34,9 @@ function BirthdayIntro() {
   const [phase, setPhase] = useState<'intro' | 'card'>('intro')
   const [index, setIndex] = useState(0)
   const [showButton, setShowButton] = useState(false)
+  const [muted, setMuted] = useState(false)
   const confettiFired = useRef(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
     if (showButton) return
@@ -44,6 +47,21 @@ function BirthdayIntro() {
     )
     return () => clearTimeout(timer)
   }, [index, showButton])
+
+  useEffect(() => {
+    if (phase !== 'card') return
+    const audio = new Audio(backgroundMusicSrc)
+    audio.loop = true
+    audio.volume = 0.4
+    audio.muted = muted
+    audioRef.current = audio
+    audio.play().catch(() => {})
+    return () => { audio.pause(); audioRef.current = null }
+  }, [phase])
+
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.muted = muted
+  }, [muted])
 
   useEffect(() => {
     if (!showButton || confettiFired.current) return
@@ -68,6 +86,29 @@ function BirthdayIntro() {
         style={{ cursor: 'none' }}
         variant="circle"
       />
+
+      {phase === 'card' && (
+        <button
+          onClick={() => setMuted((m) => !m)}
+          className="fixed left-4 top-4 z-50 rounded-full border border-[var(--line)] bg-[var(--surface)] p-2.5 text-[var(--sea-ink)] shadow-sm transition hover:bg-[var(--surface-strong)]"
+          style={{ cursor: 'none' }}
+          aria-label={muted ? 'Unmute music' : 'Mute music'}
+        >
+          {muted ? (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <line x1="23" y1="9" x2="17" y2="15" />
+              <line x1="17" y1="9" x2="23" y2="15" />
+            </svg>
+          ) : (
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
+              <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
+              <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
+            </svg>
+          )}
+        </button>
+      )}
 
       {phase === 'card' && <CourseBackground />}
 
