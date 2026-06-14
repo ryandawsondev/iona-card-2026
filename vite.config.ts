@@ -1,15 +1,17 @@
 import { defineConfig } from 'vite'
-import { devtools } from '@tanstack/devtools-vite'
-
-import { tanstackStart } from '@tanstack/react-start/plugin/vite'
-
+import { TanStackRouterVite } from '@tanstack/router-plugin/vite'
 import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import path from 'path'
 
 const config = defineConfig({
   base: '/iona-card-2026/',
-  resolve: { tsconfigPaths: true },
-  plugins: [devtools(), tailwindcss(), tanstackStart(), viteReact()],
+  resolve: {
+    alias: {
+      '#': path.resolve(__dirname, './src'),
+    },
+  },
+  plugins: [TanStackRouterVite(), tailwindcss(), viteReact()],
 })
 
 export default config
