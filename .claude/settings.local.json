@@ -6,7 +6,8 @@
       "Bash(Out-Null)",
       "Bash(node -e \"const r = require\\('./node_modules/radix-ui/dist/index.cjs'\\); console.log\\(Object.keys\\(r\\).filter\\(k => k.toLowerCase\\(\\).includes\\('slot'\\)\\)\\)\")",
       "PowerShell(git *)",
-      "Bash(pnpm tsc *)"
+      "Bash(pnpm tsc *)",
+      "Bash(pnpm run *)"
     ]
   }
 }
