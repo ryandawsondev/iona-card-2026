@@ -92,7 +92,7 @@ function BirthdayIntro() {
         variant="circle"
       />
 
-      {phase === 'card' && (
+      {(phase === 'card' || phase === 'gift') && (
         <button
           onClick={() => setMuted((m) => !m)}
           className="fixed left-4 top-4 z-50 rounded-full border border-[var(--line)] bg-[var(--surface)] p-2.5 text-[var(--sea-ink)] shadow-sm transition hover:bg-[var(--surface-strong)]"
@@ -184,7 +184,7 @@ function BirthdayIntro() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <EnvelopeReveal onDone={() => setPhase('card')} />
+            <EnvelopeReveal onDone={() => setPhase('card')} muted={muted} />
           </motion.div>
         )}
       </AnimatePresence>

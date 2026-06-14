@@ -1,25 +1,46 @@
 import { AnimatePresence, motion } from 'motion/react'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import confetti from 'canvas-confetti'
 import { ShineBorder } from '#/components/ui/shine-border.tsx'
+import manicureSongSrc from '../audio-file/06 MANiCURE.mp3'
 
 type Stage = 'settling' | 'idle' | 'opening'
 
 interface Props {
   onDone: () => void
+  muted?: boolean
 }
 
-export function EnvelopeReveal({ onDone }: Props) {
+export function EnvelopeReveal({ onDone, muted = false }: Props) {
   const [stage, setStage] = useState<Stage>('settling')
   const [showCard, setShowCard] = useState(false)
+  const audioRef = useRef<HTMLAudioElement | null>(null)
 
   useEffect(() => {
     const t = setTimeout(() => setStage('idle'), 1400)
     return () => clearTimeout(t)
   }, [])
 
+  useEffect(() => {
+    if (audioRef.current) audioRef.current.muted = muted
+  }, [muted])
+
+  useEffect(() => {
+    return () => { audioRef.current?.pause(); audioRef.current = null }
+  }, [])
+
   const handleOpen = () => {
     setStage('opening')
+    const audio = new Audio(manicureSongSrc)
+    audio.loop = true
+    audio.volume = 0.5
+    audio.muted = muted
+    audioRef.current = audio
+    audio.play().catch(() => {
+      const resume = () => { audio.play().catch(() => {}) }
+      document.addEventListener('touchstart', resume, { once: true })
+      document.addEventListener('click', resume, { once: true })
+    })
     setTimeout(() => {
       setShowCard(true)
       const burst = (angle: number, x: number) =>
