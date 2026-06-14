@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { AuroraText } from '#/components/ui/aurora-text.tsx'
 import { LightRays } from '#/components/ui/light-rays.tsx'
@@ -9,6 +9,7 @@ const PAGES = 2
 
 export function BirthdayCard({ onGiftReveal }: { onGiftReveal?: () => void }) {
   const [page, setPage] = useState(0)
+  const touchStartX = useRef<number | null>(null)
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -17,15 +18,30 @@ export function BirthdayCard({ onGiftReveal }: { onGiftReveal?: () => void }) {
     if (!isRightHalf && page > 0) setPage((p) => p - 1)
   }
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return
+    const diff = e.changedTouches[0].clientX - touchStartX.current
+    if (Math.abs(diff) < 40) return
+    if (diff < 0 && page < PAGES - 1) setPage((p) => p + 1)
+    if (diff > 0 && page > 0) setPage((p) => p - 1)
+    touchStartX.current = null
+  }
+
   return (
     <div className="flex flex-col items-center gap-5">
       <div style={{ perspective: '1400px' }}>
         <motion.div
           onClick={handleClick}
+          onTouchStart={handleTouchStart}
+          onTouchEnd={handleTouchEnd}
           animate={{ rotateY: page === 1 ? -180 : 0 }}
           transition={{ type: 'spring', stiffness: 60, damping: 18 }}
           style={{ transformStyle: 'preserve-3d', cursor: 'none' }}
-          className="relative w-[min(760px,92vw)] aspect-[16/10]"
+          className="relative w-[min(760px,92vw)] aspect-[3/4] sm:aspect-[16/10]"
         >
           <div
             style={{ backfaceVisibility: 'hidden' }}
@@ -58,8 +74,8 @@ export function BirthdayCard({ onGiftReveal }: { onGiftReveal?: () => void }) {
         ))}
       </div>
 
-      <p className="text-xs text-[var(--sea-ink-soft)] tracking-widest uppercase opacity-50">
-        {page === 0 ? 'tap right to open' : 'tap left to go back'}
+      <p className="text-xs text-[var(--sea-ink-soft)] tracking-widest uppercase opacity-50 select-none">
+        {page === 0 ? 'swipe or tap right to open' : 'swipe or tap left to go back'}
       </p>
     </div>
   )
@@ -147,20 +163,20 @@ function Cover() {
 
 function Message({ onGiftReveal }: { onGiftReveal?: () => void }) {
   return (
-    <div className="relative h-full w-full bg-gradient-to-br from-rose-50 via-purple-50 to-indigo-50 flex items-center justify-center p-[clamp(1.5rem,5vw,3rem)]">
+    <div className="relative h-full w-full bg-gradient-to-br from-rose-50 via-purple-50 to-indigo-50 flex items-center justify-center p-4 sm:p-[clamp(1.5rem,5vw,3rem)]">
       <div className="pointer-events-none absolute top-0 right-0 h-36 w-36 rounded-bl-[80px] bg-gradient-to-bl from-pink-100 to-transparent opacity-60" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-28 w-28 rounded-tr-[60px] bg-gradient-to-tr from-purple-100 to-transparent opacity-60" />
 
-      <div className="max-w-[520px] text-center space-y-3">
+      <div className="max-w-[520px] text-center space-y-2 sm:space-y-3">
         <div className="w-10 h-px bg-gradient-to-r from-pink-300 to-purple-300 mx-auto" />
         <p
-          className="text-stone-700 font-semibold text-[clamp(0.8rem,1.7vw,1rem)]"
+          className="text-stone-700 font-semibold text-sm sm:text-[clamp(0.8rem,1.7vw,1rem)]"
           style={{ fontFamily: 'Fraunces, Georgia, serif' }}
         >
           Dear Iona, Happy 22nd Birthday!
         </p>
         <p
-          className="text-stone-600 leading-relaxed text-[clamp(0.72rem,1.5vw,0.9rem)]"
+          className="text-stone-600 leading-relaxed text-xs sm:text-[clamp(0.72rem,1.5vw,0.9rem)]"
           style={{ fontFamily: 'Fraunces, Georgia, serif' }}
         >
           Can't believe you're almost an old grandma. I know this is late but I
@@ -168,14 +184,14 @@ function Message({ onGiftReveal }: { onGiftReveal?: () => void }) {
           this quality every year!
         </p>
         <p
-          className="text-stone-600 leading-relaxed text-[clamp(0.72rem,1.5vw,0.9rem)]"
+          className="text-stone-600 leading-relaxed text-xs sm:text-[clamp(0.72rem,1.5vw,0.9rem)]"
           style={{ fontFamily: 'Fraunces, Georgia, serif' }}
         >
           Hopefully you'll like the gift too. You are a wonderful sister and I
           aspire to be as nice as you one day.
         </p>
         <div className="w-10 h-px bg-gradient-to-r from-purple-300 to-pink-300 mx-auto" />
-        <p className="text-stone-400 text-[clamp(0.6rem,1.2vw,0.7rem)] tracking-[0.3em] uppercase">
+        <p className="text-stone-400 text-[0.6rem] tracking-[0.3em] uppercase sm:text-[clamp(0.6rem,1.2vw,0.7rem)]">
           With love from Ryan
         </p>
 
@@ -186,7 +202,7 @@ function Message({ onGiftReveal }: { onGiftReveal?: () => void }) {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.4 }}
               onClick={onGiftReveal}
-              className="mt-1 rounded-full border border-purple-200 px-5 py-2 text-[clamp(0.6rem,1.3vw,0.75rem)] font-semibold tracking-wide text-purple-600 transition hover:border-purple-400 hover:bg-purple-50"
+              className="mt-1 rounded-full border border-purple-200 px-4 py-1.5 text-xs font-semibold tracking-wide text-purple-600 transition hover:border-purple-400 hover:bg-purple-50 sm:px-5 sm:py-2 sm:text-[clamp(0.6rem,1.3vw,0.75rem)]"
               style={{ cursor: 'none' }}
             >
               🎁 Open your gift

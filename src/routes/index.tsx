@@ -56,7 +56,11 @@ function BirthdayIntro() {
     audio.volume = 0.4
     audio.muted = muted
     audioRef.current = audio
-    audio.play().catch(() => {})
+    audio.play().catch(() => {
+      const resume = () => { audio.play().catch(() => {}) }
+      document.addEventListener('touchstart', resume, { once: true })
+      document.addEventListener('click', resume, { once: true })
+    })
     return () => { audio.pause(); audioRef.current = null }
   }, [phase])
 

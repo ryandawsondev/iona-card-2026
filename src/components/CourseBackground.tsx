@@ -87,6 +87,11 @@ export function CourseBackground({ onComplete }: { onComplete?: () => void }) {
   const [hits, setHits] = useState(0)
   const [started, setStarted] = useState(false)
   const [checkpointIdx, setCheckpointIdx] = useState(0)
+  const [isTouch, setIsTouch] = useState(false)
+
+  useEffect(() => {
+    setIsTouch(window.matchMedia('(hover: none) and (pointer: coarse)').matches)
+  }, [])
 
   const toSVG = useCallback((clientX: number, clientY: number) => {
     const svg = svgRef.current
@@ -182,6 +187,8 @@ export function CourseBackground({ onComplete }: { onComplete?: () => void }) {
     window.addEventListener('mousemove', onMove)
     return () => window.removeEventListener('mousemove', onMove)
   }, [toSVG, onComplete])
+
+  if (isTouch) return null
 
   return (
     <motion.div
