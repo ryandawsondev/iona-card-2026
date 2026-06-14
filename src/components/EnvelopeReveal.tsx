@@ -257,7 +257,7 @@ function GiftCard({ onContinue }: { onContinue: () => void }) {
 
         {/* Real photo: uncomment and set src */}
         <img
-          src="/manicure-experience.webp"
+          src={`${import.meta.env.BASE_URL}manicure-experience.webp`}
           className="absolute inset-0 h-full w-full object-cover"
           alt="Manicure experience"
         />
