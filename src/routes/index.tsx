@@ -14,18 +14,26 @@ import backgroundMusicSrc from '../audio-file/01 First Light.mp3'
 
 export const Route = createFileRoute('/')({ component: BirthdayIntro })
 
-
 const PARTY_COLORS = ['#ff6b9d', '#c44dff', '#ff8c42', '#ffd700', '#4fb8b2']
 const AURORA_COLORS = ['#ff6b9d', '#c44dff', '#ff8c42', '#ffd700']
 
 const SENTENCES = [
   <>
-    Hey <AuroraText colors={AURORA_COLORS}>Iona</AuroraText>
+    Hi <AuroraText colors={AURORA_COLORS}>Iona</AuroraText>
   </>,
-  <>Another year around the sun...</>,
-  <>And you just keep getting cooler.</>,
-  <>We made you something special.</>,
-  <>Happy Birthday.</>,
+  <>I apologise I couldnt get this to you sooner...</>,
+  <>Hopefully all this creativity makes up for it.</>,
+  <>Crazy that high school only felt like yesterday!</>,
+  <>This took me a while so hopefully you like it</>,
+  <>You have a lovely smile</>,
+  <>I'm just complimenting you now. Deal with it.</>,
+  <>
+    Well done on doing so well with Uni. I'm very proud to say you're my sister.
+  </>,
+  <>22 years and look how much you've done with your life.</>,
+  <>haha.</>,
+  <>Anyways, lets get on with it...</>,
+  <>Happy Belated Birthday!</>,
 ]
 
 const DISPLAY_MS = 2400
@@ -57,11 +65,16 @@ function BirthdayIntro() {
     audio.muted = muted
     audioRef.current = audio
     audio.play().catch(() => {
-      const resume = () => { audio.play().catch(() => {}) }
+      const resume = () => {
+        audio.play().catch(() => {})
+      }
       document.addEventListener('touchstart', resume, { once: true })
       document.addEventListener('click', resume, { once: true })
     })
-    return () => { audio.pause(); audioRef.current = null }
+    return () => {
+      audio.pause()
+      audioRef.current = null
+    }
   }, [phase])
 
   useEffect(() => {
@@ -100,13 +113,33 @@ function BirthdayIntro() {
           aria-label={muted ? 'Unmute music' : 'Mute music'}
         >
           {muted ? (
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
               <line x1="23" y1="9" x2="17" y2="15" />
               <line x1="17" y1="9" x2="23" y2="15" />
             </svg>
           ) : (
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" />
               <path d="M15.54 8.46a5 5 0 0 1 0 7.07" />
               <path d="M19.07 4.93a10 10 0 0 1 0 14.14" />
@@ -152,7 +185,9 @@ function BirthdayIntro() {
                     whileHover={{ y: -6 }}
                     transition={{ type: 'spring', stiffness: 400, damping: 20 }}
                   >
-                    <CoolMode options={{ particle: 'circle', particleCount: 6 }}>
+                    <CoolMode
+                      options={{ particle: 'circle', particleCount: 6 }}
+                    >
                       <RainbowButton
                         size="lg"
                         className="rounded-full px-10 py-5 text-base"
